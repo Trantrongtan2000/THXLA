@@ -1,0 +1,2 @@
+[labeled,numObjects]=bwlabel(bw,8);
+numObjects

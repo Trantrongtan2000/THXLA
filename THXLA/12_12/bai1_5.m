@@ -1,0 +1,1 @@
+imfinfo('table2.png')
