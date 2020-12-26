@@ -1,24 +1,13 @@
-% load mat file containing the original mri
+load brain_mask
 load raw_mri 
-% see what's in memory
-whos
-% create a subplot window
-subplot(2,2,1) 
-% grab the coronal slice corresponding to y=128 and store it in a new
-% variable
-coronal_slice = mri(:,128,:);
-% NOTE: colon operator denotes "all" elements in the given dimension
-% NOTE: semicolon after line suppresses output
-% get the size of the slice
-size(coronal_slice)
-% NOTE: no semicolon as we want to display the current size of the variable
-% "coronal_slice"
-% remove "singleton" dimension
-coronal_slice = squeeze(coronal_slice);
+class(m)
+class(mri)
 
-% observe the size of the array after squeezing
-size(coronal_slice)
-% NOTE: "coronal_slice" is now a 2-dimensional array
+mri_new = double(mri); 
+class(mri_new)
+masked_mri = mri_new.*m;
 
-% display slice
-imagesc(coronal_slice);
+I= masked_mri(:,:,128);
+I= squeeze(I);
+BW = edge(I);
+imshow(BW)
