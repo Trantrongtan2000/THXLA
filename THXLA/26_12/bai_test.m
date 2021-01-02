@@ -1,110 +1,98 @@
-% load mat file containing the original mri
+% Dùng load ?? load d? li?u file mat g?c
 load raw_mri 
-% see what's in memory
+% xem b? nh?
 whos
-% create a subplot window
+% t?o c?a s? Subplot
 subplot(2,2,1) 
-% grab the coronal slice corresponding to y=128 and store it in a new
-% variable
+% t?o l?p c?t coronal slice v?i y=128 và l?u vào bi?n m?i, ngoài ra d?u “:” ?? l?y t?t c? d? li?u trong file
 coronal_slice = mri(:,128,:);
-% NOTE: colon operator denotes "all" elements in the given dimension
-% NOTE: semicolon after line suppresses output
-% get the size of the slice
+% l?y kích th??c coronal slice
 size(coronal_slice)
-% NOTE: no semicolon as we want to display the current size of the variable
-% "coronal_slice"
-% remove "singleton" dimension
+% lo?i b? không gian singleton b?ng l?nh squeezing
 coronal_slice = squeeze(coronal_slice);
-
-% observe the size of the array after squeezing
+ 
+% l?y kích th??c coronal slice
 size(coronal_slice)
-% NOTE: "coronal_slice" is now a 2-dimensional array
-
-% display slice
+% coronal_slice gi? là m?ng 2 chi?u
+ 
+% hi?n th? lát
 imagesc(coronal_slice);
-% NOTE: intensity of each pixel corresponds to tissue type
 
-% change to a grayscale colormap
+% ??i ?nh sang d?ng ?nh xám
 colormap(gray)
-
-% add a title to our subplot
+ 
+% thêm tiêu ??
 title('Coronal Slice')
-
-% display the coronal slice right side up
-
-% create a second panel
+ 
+% Hi?n th? Coronal Slice bên ph?i
+ 
+% t?o b?ng Subplot th? 2
 subplot(2,2,2)
-
-% display the transposed matrix
+ 
+% hi?n th? ma tr?n chuy?n v?
 imagesc(coronal_slice');
-% NOTE: in MATLAB, the prime operator ' denotes matrix transposition
-
-% make the axes Cartesian
+ 
+% t?o tr?c Cartesian
 axis xy
-
-% insert new title
+ 
+% chèn tiêu ?? m?i
 title('Coronal Slice Right Side Up')
-
-
-% display the sagittal slice
+ 
+ 
+% hi?n th? sagittal slice
 subplot(2,2,3)
-
-% grab a slice corresponding to the y-z plane
+ 
+% l?y m?t slice t??ng ?ng m?t ph?ng y-z
 sagittal_slice = mri(128,:,:);
 sagittal_slice = squeeze(sagittal_slice);
 imagesc(sagittal_slice');
 axis xy
 title('Sagittal Slice')
-
-% display the axial slice
+ 
+% hi?n th? tr?c c?t
 subplot(2,2,4)
+ 
+% l?y m?t slice t??ng ?ng m?t ph?ng x-y
 
-% grab a slice corresponding to the x-y plane
 axial_slice = mri(:,:,95);
 axial_slice = squeeze(axial_slice);
 imagesc(axial_slice');
 axis xy
 title('Axial Slice')
-
-
+ 
+ 
 %%
-
-% load mat file containing our data: mask of the brain
+ 
+% Dùng load ?? load d? li?u file brain_mask
 load brain_mask
-
-% display the contents of memory
+ 
+% hi?n th? n?i dung b? nh?
 whos
-% NOTE: the mask is stored in a variable called "m"
 
-% get the size of the mask m
+% l?y kích th??c mask m
 size(m)
-
-% get the type of data contained in the "m" variable
+ 
+% l?y ki?u d? li?u trong bi?n m
 class(m)
-
-% get the type of data contained in the "mri" variable
+% l?y lo?i d? li?n trong bi?n mri
 class(mri)
-
-% since the data types don't match up, we must convert one of them to match
-% the other if we want to do any processing
-
-% convert "mri" to a floating-point array (as opposed to integer data)
+ 
+% ??i mri sang m?ng double
 mri_new = double(mri); 
-
-% compare the size of "mri_new" with that of "mri"
+ 
+% hi?n th? n?i dung b? nh? 
 whos
-
-% now observe the type of data in "mri_new"
+ 
+% l?y lo?i d? li?n trong bi?n mri_new
 class(mri_new)
-
-% apply the mask to the mri image
+ 
+% xác nh?n mask cho ?nh mri
 masked_mri = mri_new.*m;
-% NOTE: .* denotes element-by-element multiplication, which is not the same
-% as matrix multiplication
 
-% display three brain slices
 
-% create a new figure window
+% hi?n th? 3 l?p c?t não
+ 
+% t?o c?a s? figure m?i
 figure
 subplot(2,2,1) 
 masked_coronal_slice = masked_mri(:,128,:);
@@ -113,8 +101,8 @@ imagesc(masked_coronal_slice');
 axis xy
 colormap(gray)
 title('Masked Coronal Slice')
-
-% display the sagittal slice
+ 
+% hi?n th? l?p sagittal slice
 subplot(2,2,2)
 masked_sagittal_slice = masked_mri(128,:,:);
 masked_sagittal_slice = squeeze(masked_sagittal_slice);
@@ -122,8 +110,8 @@ imagesc(masked_sagittal_slice');
 axis xy
 colormap(gray)
 title('Masked Sagittal Slice')
-
-% display the axial slice
+ 
+% hi?n th? l?p axial slice
 subplot(2,2,3)
 masked_axial_slice = masked_mri(:,:,95);
 masked_axial_slice = squeeze(masked_axial_slice);
@@ -131,5 +119,3 @@ imagesc(masked_axial_slice');
 axis xy
 colormap(gray)
 title('Masked Axial Slice')
-
-%%
